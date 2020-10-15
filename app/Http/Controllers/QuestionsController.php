@@ -2,22 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AskQuestionRequest;
 use App\Question;
+use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth')->except(['index', 'show']);
-    }
-
     public function index()
     {
-        // show all question orderBy latest then paginate
-        $questions = Question::with('user')->latest()->paginate(5);
-        return view('question.index', compact('questions'));
+        return view('question.index', [
+            'questions' => Question::with('user')->latest()->paginate(5)
+        ]);
     }
 
     public function create()
@@ -55,7 +49,6 @@ class QuestionsController extends Controller
         $this->authorize('update', $question);
         $question->update($request->only('title', 'body'));
         return redirect('/questions')->with('success', "your question has been submitted");
-
     }
 
     public function destroy(Question $question)

@@ -17,11 +17,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // [ QUESTION ]
 Route::resource('questions', QuestionController::class);
-Route::post('questions/{question}/answer', AnswerQuestionController::class)->name('answer.store');
+// Route::post('questions/{question}/answer', AnswerQuestionController::class)->name('answer.store');
 
 // [ ANSWER ]
 Route::resource('answers', AnswerController::class)->except('index', 'show', 'create');
-Route::post('answers/{answer}/accept', 'AcceptAnswerController')->name('answers.accept');
+Route::post('answers/{answer}/accept', AcceptAnswerController::class)->name('answers.accept');
 
 // [ FAVORITE ]
 Route::post('questions/{question}/favorite', [QuestionFavoriteController::class,'store'])->name('questions.favotite');

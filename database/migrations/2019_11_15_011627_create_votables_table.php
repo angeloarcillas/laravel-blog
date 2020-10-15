@@ -14,12 +14,11 @@ class CreateVotablesTable extends Migration
     public function up()
     {
         Schema::create('votables', function (Blueprint $table) {
-            //pivot table
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('votable_id');
-            $table->string('votable_type');
-            $table->tinyInteger('vote')->comment('-1: down vote,1: up vote');
             $table->unique(['user_id', 'votable_id', 'votable_type']);
+            $table->foreignId('user_id');
+            $table->foreignId('votable_id');
+            $table->string('votable_type');
+            $table->boolean('vote')->comment('0: down vote, 1: up vote');
             $table->timestamps();
         });
     }
