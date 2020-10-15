@@ -1,14 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Question extends Model
 {
-    use Traits\VotableTrait;
+    use HasFactory;
+    // use Traits\VotableTrait;
 
     protected $fillable = ['title', 'body'];
 
@@ -56,7 +58,7 @@ class Question extends Model
     //     //anti xss => research parsedown
     //     return \Parsedown::instace()->text($this->body);
     // }
-    
+
     public function acceptBestAnswer(Answer $answer)
     {
         $this->best_answer_id = $answer->id;
