@@ -1,0 +1,201 @@
+// Fonts
+@import 'variables'; // Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.counters {
+    margin-right: 30px;
+    font-size: 12px;
+    text-align: center;
+
+    strong {
+        display: block;
+        font-size: 2em;
+        line-height: 1em;
+        padding-top: 0.5em;
+    }
+
+    .answer,
+    .vote {
+        width: 60px;
+        height: 60px;
+    }
+
+    p {
+        margin-top: 0.5em;
+    }
+
+    .lead {
+        font-size: 1em;
+        line-height: 10px;
+        margin-bottom: 0;
+    }
+
+    .status {
+        &.unaswered {
+            border: none;
+        }
+
+        &.answered {
+            border: 1px solid $green;
+            color: $green;
+        }
+
+        &.answered-accepted {
+            background-color: $green;
+            color: #fff;
+        }
+    }
+}
+
+.vote-controls {
+    min-width: 60px;
+    margin-right: 30px;
+    text-align: center;
+    color: $gray;
+    font-weight: 700;
+
+    span,
+    a {
+        display: block;
+    }
+
+    span {
+        &.votes-count {
+            font-size: 25px;
+        }
+
+        &.favorites-count {
+            font-size: 12px;
+        }
+    }
+
+    a {
+        cursor: pointer;
+        color: $gray;
+        font-weight: 600;
+        text-decoration: none;
+
+        &.off,
+        &.off:hover {
+            color: #c4c4c4;
+        }
+
+        &.favorite {
+
+            &.favorited,
+            &.favorited:hover {
+                font-size: 5em;
+                color: $yellow;
+            }
+
+            & span {
+                margin-top: -1.7em;
+                margin-bottom: 1.3em;
+                font-size: 0.4em;
+            }
+        }
+
+        &.vote-accepted {
+            color: $green;
+        }
+
+
+
+        &.vote-up,
+        &.vote-down,
+        &.favorite {
+            font-size: 5em;
+            font-weight: 900;
+            margin: -.3em auto;
+        }
+
+        &.vote-up {
+
+            margin-top: 0;
+        }
+    }
+}
+
+
+@mixin banner {
+    width: 20%;
+    background-color: $red;
+    color: blue;
+    position: relative;
+    .s-banner-content {
+        position: absolute;
+        top: 0;
+        width: 15%;
+        background-color: $blue;
+        span {
+            font-size: ($size-2 - $size-3);
+            display: block;
+            text-transform: uppercase;
+            color: $indigo;
+            font-weight: bold;
+        }
+    }
+}
+@mixin grid($col,$m) {
+ float: left; 
+ margin-right: $m;
+ margin-bottom: $m;
+ width: ((100% - (($col - 1) * $m)) / $col);
+ &:nth-child(#{$col}n) {
+    margin-right: 0;
+ }  
+}
+
+
+
+// @mixin MQ($args) {
+//     @media screen and (max-width: $args) {
+//         @content; // get contents
+//     }
+// }
+
+@mixin MQ($args...) {  //< ... > mass assign
+    @if length($args) == 1 {
+        @media screen and (max-width: nth($args,1)) {
+            @content; // get contents
+        }
+    }
+    // if $var == 2
+    @if length($args) == 2 {
+            // (<var><position>)
+        @media screen and (max-width: nth($args,1)) and (min-width: nth($args,2)) {
+            @content; // get contents
+        }
+    }
+}
+
+#s-app {
+    background-color: $pink;
+    
+    nav{
+        background-color: $indigo;
+        &:hover {
+            background-color: $orange;
+        }
+        ul {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            @include MQ(777px) {
+                // set @content
+                display:block;
+            }
+        }
+
+    }
+    .s-banner {
+        @include banner;
+    }
+    .s-grid {
+        div{
+            @include grid(3,4%);
+            background-color: red;
+        }
+    }
+}
+
