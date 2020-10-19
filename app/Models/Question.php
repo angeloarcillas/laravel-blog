@@ -23,6 +23,10 @@ class Question extends Model
         return $this->hasMany(Answer::class)->orderBy('votes_count', 'DESC');
     }
 
+    public function path($append = 'index')
+    {
+        return route("questions.$append", $this->id);
+    }
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
@@ -43,14 +47,9 @@ class Question extends Model
 
     public function getStatusAttribute()
     {
-        if ($this->answers_count > 0) {
-            if ($this->best_answer_id) {
-                return "answered-accepted";
-            }
-            return "answered";
-        } else {
-            return "unanswered";
-        }
+        return $this->best_answer_id
+          ? 'border-teal-400 text-teal-500'
+          : 'border-transparent';
     }
 
     // public function getTextAttribute()

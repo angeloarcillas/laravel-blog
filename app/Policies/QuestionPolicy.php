@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Question;
-use App\User;
+use App\models\Question;
+use App\models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class QuestionPolicy
@@ -12,12 +12,12 @@ class QuestionPolicy
 
     public function update(User $user, Question $question)
     {
-        return $user->id == $question->user_id;
+        return $user->id === $question->user_id;
     }
 
     public function delete(User $user, Question $question)
     {
-        return $user->id == $question->user_id && $question->answers_count < 1;
+        return $user->id === $question->user_id;
     }
 
 }

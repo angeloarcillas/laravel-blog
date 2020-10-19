@@ -54,6 +54,6 @@ class QuestionController extends Controller
     {
         $this->authorize('delete', $question);
         $question->delete();
-        return redirect('/questions')->with('success', "your question has been submitted");
+        return redirect('/questions')->with('success', "your question has been deleted");
     }
 }
