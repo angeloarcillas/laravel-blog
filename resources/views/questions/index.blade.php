@@ -44,15 +44,16 @@
           <h3
           class="text-xl font-semibold mb-1">
           {{$question->title}}</h3>
+          @can ('update', $question)
           <div class="flex text-xs items-start">
-            <a class="mr-1 text-blue-500"
-            href="#">Edit</a>
+                    <a href="{{ $question->path('edit') }}"
+            class="mr-1 text-blue-400">Edit</a>
             @can ('delete', $question)
             <a href="#"
             class="text-red-500"
-          onclick="event.preventDefault();document.querySelector('#deleteQuestion-{{$question->id}}').submit()"
+            onclick="event.preventDefault();document.querySelector('#deleteQuestion-{{$question->id}}').submit()"
             >Delete</a>
-          <form id="deleteQuestion-{{$question->id}}" class="hidden"
+            <form id="deleteQuestion-{{$question->id}}" class="hidden"
               action="{{ $question->path('destroy') }}"
               method="post">
               @method('DELETE')
@@ -60,6 +61,7 @@
             </form>
             @endcan
           </div>
+          @endcan
         </div>
 
         <p>Asked by:
@@ -86,9 +88,5 @@
 </x-master>
 
 {{--
-  @can ('update', $question)
-          <a href="{{ route('questions.edit',$question->id) }}"
-class="btn btn-sm btn-outline-info">Edit</a>
-@endcan
 
 --}}

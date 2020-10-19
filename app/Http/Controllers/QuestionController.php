@@ -14,10 +14,15 @@ class QuestionController extends Controller
         ]);
     }
 
+    public function show(Question $question)
+    {
+        $question->increment('views');
+        return view('questions.show', compact('question'));
+    }
+
     public function create()
     {
-        $question = new Question();
-        return view('questions.create', compact('question'));
+        return view('questions.create');
     }
 
     public function store(AskQuestionRequest $request)
@@ -26,11 +31,6 @@ class QuestionController extends Controller
         return redirect('/questions')->with('success', "your question has been submitted");
     }
 
-    public function show(Question $question)
-    {
-        $question->increment('views');
-        return view('questions.show', compact('question'));
-    }
 
     public function edit(Question $question)
     {
@@ -40,11 +40,6 @@ class QuestionController extends Controller
 
     public function update(AskQuestionRequest $request, Question $question)
     {
-        // [ CUSTOM GATE - AUTH]
-        // if (\Gate::denies('update-question',$question)) {
-        //   abort(403,"Access Denied");
-        // }
-
         $this->authorize('update', $question);
         $question->update($request->only('title', 'body'));
         return redirect('/questions')->with('success', "your question has been submitted");
