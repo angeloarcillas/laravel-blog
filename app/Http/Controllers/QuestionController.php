@@ -22,7 +22,6 @@ class QuestionController extends Controller
 
     public function store(AskQuestionRequest $request)
     {
-        //create only title and body
         $request->user()->questions()->create($request->only('title', 'body'));
         return redirect('/questions')->with('success', "your question has been submitted");
     }
