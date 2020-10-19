@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Question;
+use App\Models\Question;
 use App\Http\Requests\AskQuestionRequest;
 
-class QuestionsController extends Controller
+class QuestionController extends Controller
 {
     public function index()
     {
-        return view('question.index', [
+        return view('questions.index', [
             'questions' => Question::with('user')->latest()->paginate(5)
         ]);
     }
@@ -17,7 +17,7 @@ class QuestionsController extends Controller
     public function create()
     {
         $question = new Question();
-        return view('question.create', compact('question'));
+        return view('questions.create', compact('question'));
     }
 
     public function store(AskQuestionRequest $request)
@@ -30,13 +30,13 @@ class QuestionsController extends Controller
     public function show(Question $question)
     {
         $question->increment('views');
-        return view('question.show', compact('question'));
+        return view('questions.show', compact('question'));
     }
 
     public function edit(Question $question)
     {
         $this->authorize('update', $question);
-        return view('question.edit', compact('question'));
+        return view('questions.edit', compact('question'));
     }
 
     public function update(AskQuestionRequest $request, Question $question)

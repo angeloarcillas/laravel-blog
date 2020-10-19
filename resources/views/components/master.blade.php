@@ -68,8 +68,8 @@
         </div>
       </div>
     </header>
-    <main class="h-screen p-8">
-      <div class="p-4 container mx-auto">
+    <main class="h-screen p-4">
+      <div class="container mx-auto">
         {{ $slot }}
       </div>
     </main>

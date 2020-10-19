@@ -1,25 +1,6 @@
-@extends('layouts.app')
+<x-master>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h2>Ask Question</h2>
-                        <div class="ml-auto">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <form class="" action="{{ route('questions.store') }}" method="post">
-                        @include('question._form',['btnText' => 'Ask question'])
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="w-1/2 mx-auto rounded shadow">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat repellat eos minima animi quod! Possimus, temporibus! Quidem nesciunt alias qui laborum. Cumque doloribus ducimus ab, esse placeat voluptates illo maiores!
 </div>
-@endsection
+</x-master>

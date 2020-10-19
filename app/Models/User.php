@@ -44,24 +44,19 @@ class User extends Authenticatable
         return $this->hasMany(Question::class);
     }
 
-    // getter get<name>Attribute - $question-><name>
-    // setter set<name>Attribute
-    public function getAvatarAttribute()
-    {
-        $email = $this->email;
-        $size = 32;
-        return $grav_url = "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "&s=" . $size;
-    }
-
     public function favorites()
     {
-        return $this->belongsToMany(Question::class, 'favorites')->withTimestamps();
-        // return $this->belongsToMany('App\Role', 'role_user_table', 'user_id', 'role_id');
+        return $this->belongsToMany(Question::class)->withTimestamps();
+    }
+
+    public function getAvatarAttribute()
+    {
+        return $this->avatar ?? null;
     }
 
     public function voteQuestions()
     {
-        return $this->morphedByMany(Question::class, 'votable'); //specify the singlur form of table <votable>
+        return $this->morphedByMany(Question::class, 'votable');
     }
     public function voteAnswers()
     {
