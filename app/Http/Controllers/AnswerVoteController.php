@@ -7,15 +7,9 @@ use Illuminate\Http\Request;
 
 class AnswerVoteController extends Controller
 {
-    public function __construct()
+    public function __invoke(Request $request, Answer $answer)
     {
-        $this->middleware('auth');
-    }
-    public function __invoke(Answer $answer)
-    {
-        $vote = (int) request()->vote;
-        auth()->user()->voteAnswer($answer, $vote);
+        $answer->vote($request->vote);
         return back();
     }
-
 }
