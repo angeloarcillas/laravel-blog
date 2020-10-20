@@ -15,15 +15,9 @@ class Answer extends Model
     {
         // EVENTS
         parent::boot();
-        //increase answers count on question
-        static::created(function ($answer) {
-            $answer->question->increment('answers_count');
-        });
         static::deleted(function ($answer) {
-            // $question = $answer->question;
-            $answer->question->decrement('answers_count');
-            //set best answer to when if user deleted answer
-            if ($question->best_answer_id == $answer->id) { //-> refer to add foreign best ans table
+            $question = $answer->question;
+            if ($question->best_answer_id == $answer->id) {
                 $question->best_answer_id = null;
                 $question->save();
             }
@@ -40,22 +34,14 @@ class Answer extends Model
         return $this->belongsTo(Question::class);
     }
 
-    public function getCreatedDateAttribute()
-    {
-        return $this->created_at->diffForHumans();
-    }
-    public function getStatusAttribute()
-    {
-        return $this->isBest() ? "vote-accepted" : " ";
-    }
-
-    public function getIsBestAttribute()
-    {
-        return $this->isBest();
-    }
 
     public function isBest()
     {
         return $this->id == $this->question->best_answer_id;
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->isBest() ? 'border-teal-400' : 'border-transparent';
     }
 }

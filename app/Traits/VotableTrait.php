@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\User;
+use App\Models\User;
 
 trait VotableTrait
 {
@@ -10,12 +10,29 @@ trait VotableTrait
     {
         return $this->morphToMany(User::class, 'votable');
     }
-    public function upVotes()
+    public function vote($vote = true)
     {
-        return $this->votes()->wherePivot('vote', 1)->get();
+        if ($this->isVoted($vote)) {
+            return $this->vote()
+                ->where('user_id', auth()->user()->id)
+                ->where('vote', $vote)
+                ->delete();
+        }
+
+        $this->vote()->updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'votable_id' => $this->id
+            ],
+            [ 'vote' => $vote ]
+        );
     }
-    public function downVotes()
+
+    public function isVoted($vote)
     {
-        return $this->votes()->wherePivot('vote', -1)->get();
+        return (bool) $this->votes()
+            ->where('user_id', auth()->user()->id)
+            ->where('vote', $vote)
+            ->count();
     }
 }
