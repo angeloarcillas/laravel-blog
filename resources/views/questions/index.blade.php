@@ -8,10 +8,12 @@
       class="flex justify-between pb-4 mb-6 border-b">
       <h2 class="text-2xl font-semibold">All
         Questions</h2>
-      <a href="{{route('questions.create')}}"
+        @auth
+        <a href="{{route('questions.create')}}"
         class="px-3 py-2 text-teal-500 border border-teal-400 rounded">Ask
         Question
       </a>
+      @endauth
     </div>
     <div>
       @forelse ($questions as $question)
@@ -41,9 +43,9 @@
 
       <div class="w-full">
         <div class="flex justify-between">
-          <h3
+        <a href="{{$question->path('show')}}"
           class="text-xl font-semibold mb-1">
-          {{$question->title}}</h3>
+          {{$question->title}}</a>
           @can ('update', $question)
           <div class="flex text-xs items-start">
                     <a href="{{ $question->path('edit') }}"

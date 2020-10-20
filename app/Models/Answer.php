@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Answer extends Model
 {
     use HasFactory;
-    use Traits\VotableTrait;
+    // use Traits\VotableTrait;
 
     protected $fillable = ['body', 'user_id'];
     public static function boot()

@@ -7,6 +7,10 @@ use App\Http\Requests\AskQuestionRequest;
 
 class QuestionController extends Controller
 {
+    public function __constuct()
+    {
+         $this->middleware('auth')->except('index', 'show');
+    }
     public function index()
     {
         return view('questions.index', [
