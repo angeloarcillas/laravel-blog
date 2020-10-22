@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Traits\Votable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -10,7 +11,7 @@ use Illuminate\Support\Str;
 class Question extends Model
 {
     use HasFactory;
-    // use Traits\VotableTrait;
+    use Votable;
 
     protected $fillable = ['title', 'body'];
 
@@ -20,7 +21,7 @@ class Question extends Model
     }
     public function answers()
     {
-        return $this->hasMany(Answer::class)->orderBy('votes_count', 'DESC');
+        return $this->hasMany(Answer::class)->latest()->orderBy('votes_count', 'DESC');
     }
     public function favorites()
     {
@@ -46,7 +47,7 @@ class Question extends Model
 
     public function getVotesCountAttribute()
     {
-        return $this->votes->count;
+        return $this->votes->count();
     }
 
     public function isFavorite()

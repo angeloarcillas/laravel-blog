@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class AnswerQuestionController extends Controller
@@ -12,8 +13,8 @@ class AnswerQuestionController extends Controller
         $attributes = $request->validate([
             'body' => 'required|min:5'
         ]);
-
-        $question->answer->create($attributes);
+        $attributes['user_id'] = $request->user()->id;
+        $question->answers()->create($attributes);
         return back();
     }
 }

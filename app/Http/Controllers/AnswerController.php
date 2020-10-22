@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Answer;
-use App\Question;
+use App\Models\Answer;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
@@ -19,23 +18,23 @@ class AnswerController extends Controller
         return back()->with('success', 'Your answer has been submitted succesfully');
     }
 
-    public function edit(Question $question, Answer $answer)
+    public function edit(Answer $answer)
     {
         $this->authorize('update', $answer);
-        return view('answer.edit', compact('question', 'answer'));
+        return view('answers.edit', compact('answer'));
     }
 
-    public function update(Request $request, Question $question, Answer $answer)
+    public function update(Request $request, Answer $answer)
     {
         $this->authorize('update', $answer);
         $answer->update($request->validate([
             'body' => 'required',
         ]));
-        return redirect()->route('questions.show', $question->slug)
+        return redirect()->route('questions.show', $answer->question->id)
             ->with('success', 'Your answer has been updated');
     }
 
-    public function destroy(Question $question, Answer $answer)
+    public function destroy(Answer $answer)
     {
         $this->authorize('delete', $answer);
         $answer->delete();

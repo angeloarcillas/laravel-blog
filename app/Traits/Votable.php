@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\User;
 
-trait VotableTrait
+trait Votable
 {
     public function votes()
     {
