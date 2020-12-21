@@ -13,13 +13,10 @@
             </a>
         </div>
         <div class="flex">
-            <div class="w-1/12 text-center"
+            <div class="w-1/12"
                 style="max-height: 10rem">
-                <p>^</p>
-                <p>{{$question->voutes_count}}</p>
-                <p>v</p>
-                <p>*</p>
-                <p>1</p>
+                <x-vote :model="$question"></x-vote>
+                <x-best :model="$question"></x-best>
             </div>
             <div class="flex-1 pt-2">
                 <p class="mb-6 text-sm">
